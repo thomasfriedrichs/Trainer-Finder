@@ -1,15 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require('dotenv').config();
+const indexRouter = require('./routes/index');
+const trainersRouter = require('./routes/trainers.routes');
+const clientsRouter = require('./routes/clients.routes');
+const appointmentsRouter = require('./routes/appointments.routes');
 
-var indexRouter = require('./routes/index');
-var trainersRouter = require('./routes/trainers');
-var clientsRouter = require('./routes/clients');
-var appointmentsRouter = require('./routes/appointments');
-
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -18,13 +17,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/trainers', trainersRouter);
-app.use('/clients', clientsRouter);
-app.use('/appointments', appointmentsRouter);
+app.use('/', trainersRouter);
+app.use('/', clientsRouter);
+app.use('/', appointmentsRouter);
 
 app.listen(3001, err => {
   if(err) console.log('SERVER ERROR', err)
-  console.log('SERVER RUNNING', process.env.PASSWORD)
+  console.log('SERVER RUNNING')
 });
 
 module.exports = app;
